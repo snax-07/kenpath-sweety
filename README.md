@@ -35,7 +35,7 @@ Sweety is a full-stack blood glucose tracking application built for the Kenpath 
 | Backend | Node.js, TypeScript, Express 5 |
 | Database | PostgreSQL |
 | Data access / schema tooling | Prisma ORM 8 release-candidate CLI and `@prisma/orm-postgres` |
-| Authentication | JSON Web Tokens, `bcryptjs), HTTP-only cookies |
+| Authentication | JSON Web Tokens, `bcryptjs`, HTTP-only cookies |
 | Validation | Zod |
 | Frontend | Next.js 16, React 19, TypeScript |
 | Styling | Tailwind CSS 4, custom CSS |
@@ -322,7 +322,7 @@ Run commands from the repository root unless stated otherwise.
 |---|---|
 | `npm run dev --workspace=server` | Start the Express server in watch mode using tsx. |
 | `npm run build --workspace=server` | Compile the backend TypeScript with its configured tsconfig. |
-| `npm run start --workspace=server` | Start the compiled backend from `apps/server/dist/server.js` (run the backend build first). |
+| `npm run start --workspace=server` | Runs the configured `node dist/server.js` command. The backend tsconfig does not currently declare an `outDir`, so verify the emitted file location before relying on this production-start script. |
 | `npm run test --workspace=server` | Run Vitest in the backend workspace. No test files are currently present in the repository. |
 | `npm run dev --workspace=client` | Start the Next.js development server. |
 | `npm run build --workspace=client` | Build the Next.js frontend for production. |
@@ -353,6 +353,7 @@ Add current application screenshots here before submission. No screenshot files 
 - The update flow checks for duplicate user/date/slot combinations but does not enforce the four-per-day limit after moving a reading to another date.
 - The API sets the authentication cookie as HTTP-only and SameSite=Lax, but the cookie options do not currently set the `secure` flag for HTTPS deployments.
 - The server's Vitest script exists, but no automated test files are included.
+- The backend TypeScript configuration does not set an `outDir`, while its start script expects `dist/server.js`; verify or align the build output before using the production-start command.
 - The root test script is still the npm-init placeholder.
 - No seed/demo data, Docker setup, Redis cache, background job, or doctor-role workflow is included.
 
